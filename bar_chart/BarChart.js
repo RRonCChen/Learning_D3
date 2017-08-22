@@ -2,7 +2,7 @@
  * Created by Ron on 2017/8/22.
  */
 
-var data = [100,30,50,60,90,25,61,73];
+var data = [100, 30, 50, 60, 90, 25, 61, 73];
 
 var width = 600;
 var height = 600;
@@ -36,7 +36,7 @@ var text = svg.selectAll("text")
     .data(data)
     .enter()
     .append("text")
-    .attr("class","bar_text")
+    .attr("class", "bar_text")
     .attr("fill", "white")
     .attr("font-size", "14px")
     .attr("text-anchor", "middle")
@@ -98,7 +98,8 @@ function draw() {
     //update
     updateText = svg.selectAll(".bar_text").data(data);
 
-    updateText.attr("fill", "white")
+    updateText.attr("class", "bar_text")
+        .attr("fill", "white")
         .attr("font-size", "14px")
         .attr("text-anchor", "middle")
         .attr("x", function (d, i) {
@@ -117,7 +118,7 @@ function draw() {
     enterText = updateText.enter();
 
     enterText.append("text")
-        .attr("class","bar_text")
+        .attr("class", "bar_text")
         .attr("fill", "white")
         .attr("font-size", "14px")
         .attr("text-anchor", "middle")
@@ -146,7 +147,7 @@ function sortBar() {
 }
 
 //增加
-function addData(){
+function addData() {
     data.push(30);
     draw();
 }
