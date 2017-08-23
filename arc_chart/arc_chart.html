@@ -25,12 +25,12 @@
         .outerRadius(50);
 
     var arcPath_min = d3.arc()
-        .innerRadius(200)
-        .outerRadius(150);
+        .innerRadius(150)
+        .outerRadius(100);
 
     var arcPath_hour = d3.arc()
-        .innerRadius(300)
-        .outerRadius(250);
+        .innerRadius(200)
+        .outerRadius(150);
 
 
     svg.append("path")
@@ -60,7 +60,7 @@
 
     svg.append("text")
         .attr("class","secText")
-        .attr("transform", "translate(480,900)")
+        .attr("transform", "translate(470,500)")
         .attr("fill", "black")
         .attr("font-size","18px")
         .text(" ");
@@ -80,6 +80,8 @@
 
         svg.select("#secPath")
             .attr("d", arcPath_sec(dataset[0]));
+
+
 
         svg.select("#minPath")
             .attr("d", arcPath_min(dataset[1]));
