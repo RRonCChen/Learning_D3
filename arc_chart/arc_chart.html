@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arc</title>
+    <script src="https://d3js.org/d3.v4.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+
+<script type=text/javascript>
+    var height = 1000;
+    var width = 1000;
+
+    var svg = d3.select("#chart")
+        .append("svg")
+        .attr("height", height)
+        .attr("width", width);
+
+    var dataset = [{startAngle: 0, endAngle: Math.PI * 0},{startAngle: 0, endAngle: Math.PI * 2},{startAngle: 0, endAngle: Math.PI * 0}];
+
+
+    var arcPath_sec = d3.arc()
+        .innerRadius(100)
+        .outerRadius(50);
+
+    var arcPath_min = d3.arc()
+        .innerRadius(200)
+        .outerRadius(150);
+
+    var arcPath_hour = d3.arc()
+        .innerRadius(300)
+        .outerRadius(250);
+
+
+    svg.append("path")
+        .attr("d", arcPath_sec(dataset[0]))
+        .attr("id","secPath")
+        .attr("transform", "translate(500,500)")
+        .attr("fill", "#c7fff1")
+        .attr("stroke", "black")
+        .attr("stroke-width", "2px");
+
+    svg.append("path")
+        .attr("d", arcPath_min(dataset[1]))
+        .attr("id","minPath")
+        .attr("transform", "translate(500,500)")
+        .attr("fill", "#61fff1")
+        .attr("stroke", "black")
+        .attr("stroke-width", "2px");
+
+    svg.append("path")
+        .attr("d", arcPath_hour(dataset[2]))
+        .attr("id","hourPath")
+        .attr("transform", "translate(500,500)")
+        .attr("fill", "#acd9f1")
+        .attr("stroke", "black")
+        .attr("stroke-width", "2px");
+
+
+    svg.append("text")
+        .attr("class","secText")
+        .attr("transform", "translate(480,900)")
+        .attr("fill", "black")
+        .attr("font-size","18px")
+        .text(" ");
+
+
+    var t;
+
+    (function update() {
+        var now = new Date();
+        var second = now.getSeconds();
+        var minute = now.getMinutes();
+        var hour = now.getHours();
+
+        dataset[0].endAngle = Math.PI * 2 * (second / 60);
+        dataset[1].endAngle = Math.PI * 2 * (minute / 60);
+        dataset[2].endAngle = Math.PI * 2 * ((hour%12) / 12);
+
+        svg.select("#secPath")
+            .attr("d", arcPath_sec(dataset[0]));
+
+        svg.select("#minPath")
+            .attr("d", arcPath_min(dataset[1]));
+
+        svg.select("#hourPath")
+            .attr("d", arcPath_hour(dataset[2]));
+
+        svg.select(".secText")
+            .text(hour+":"+minute+":"+second);
+
+        t = setTimeout(update, 1000);
+    })();
+
+</script>
+</body>
+</html>
