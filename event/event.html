@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event</title>
+    <script src="https://d3js.org/d3.v4.js"></script>
+</head>
+<body>
+<div id="chart"></div>
+<script type=text/javascript>
+    var height = 600;
+    var width =600;
+
+    var already = false;
+
+    var svg = d3.select("#chart")
+        .append("svg")
+        .attr("height",height)
+        .attr("width",width);
+
+    var dataset = ["Q","S","C","1","5","9","0","4"];
+
+
+
+    var rect = svg.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("id",function(d){return d;})
+        .attr("height","50")
+        .attr("width","50")
+        .attr("x",function(d,i){
+            return i*55;
+        })
+        .attr("y","100")
+        .attr("fill","#dffaf7")
+        .on("touchstart",function(){
+            d3.select(this).remove();
+            var rects = svg.selectAll("rect");
+            if(rects.size() == 0 && already==false){
+                already = true;
+                alert(" ◉‿◉");
+            }
+        });
+
+    var text =svg.selectAll("text")
+        .data(dataset)
+        .enter()
+        .append("text")
+        .attr("fill", "black")
+        .attr("font-size", "14px")
+        .attr("text-anchor", "middle")
+        .attr("x",function(d,i){
+            return i*55;
+        })
+        .attr("y","100")
+        .attr("dx", 50 / 2)
+        .attr("dy", "1em")
+        .text(function(d){return d;});
+
+    svg.append("text")
+        .attr("class","title")
+        .attr("fill", "black")
+        .attr("font-size", "14px")
+        .attr("text-anchor", "middle")
+        .attr("x","175")
+        .attr("y","50")
+        .attr("dx", 50 / 2)
+        .attr("dy", "1em")
+        .text("按每個字母");
+
+    d3.select("body").on("keydown",function(){
+        var rectP = d3.select("[id=\""+String.fromCharCode(d3.event.keyCode)+"\"]");
+        rectP.attr("fill",function(d){
+            if(d == String.fromCharCode(d3.event.keyCode)){
+                dataset.splice(dataset.indexOf(d),1);
+                return "#1c1808";
+            }}
+        )
+
+        if(dataset.length==0 && already==false){
+            already = true;
+            alert(" ◉‿◉");
+        };
+    });
+
+</script>
+</body>
+</html>
